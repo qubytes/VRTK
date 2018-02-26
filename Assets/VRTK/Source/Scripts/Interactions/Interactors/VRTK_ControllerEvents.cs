@@ -22,6 +22,14 @@ namespace VRTK
         public float touchpadTwoAngle;
     }
 
+    public enum ControllerInteractionType
+    {
+        TriggerPressed = 0,
+        TriggerReleased = 1,
+        TriggerTouchStart = 2,
+        TriggerTouchEnd = 3
+    }
+
     /// <summary>
     /// Event Payload
     /// </summary>
