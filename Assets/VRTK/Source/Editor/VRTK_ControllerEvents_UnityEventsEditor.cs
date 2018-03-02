@@ -3,8 +3,9 @@
     using System;
     using UnityEngine;
     using UnityEditor;
+    using VRTK.UnityEventHelper;
 
-    [CustomEditor(typeof(VRTK_ControllerEvents))]
+    [CustomEditor(typeof(VRTK_ControllerEvents_UnityEvents))]
     public class VRTK_ControllerEvents_UnityEventsEditor : Editor
     {
         SerializedProperty delegatesProp;
@@ -98,13 +99,25 @@
                 {
                     SerializedProperty delegateEntryProp = delegatesProp.GetArrayElementAtIndex(delegateIndex);
                     SerializedProperty eventIdProp = delegateEntryProp.FindPropertyRelative("eventID");
-
+                    
                     if (eventIdProp.enumValueIndex == typeIndex)
                     {
-                        triggerMenu.AddItem(eventTypes[typeIndex], false, OnAddNewSelected, typeIndex);
+                        active = false;
                     }
                 }
+
+                if (active)
+                {
+                    triggerMenu.AddItem(eventTypes[typeIndex], false, OnAddNewSelected, typeIndex);
+                }
+                else
+                {
+                    triggerMenu.AddDisabledItem(eventTypes[typeIndex]);
+                }
             }
+
+            triggerMenu.ShowAsContext();
+            Event.current.Use();
         }
 
         private void OnAddNewSelected(object index)
